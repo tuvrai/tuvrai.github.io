@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+		<title>lis.dev - blog</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://kit.fontawesome.com/01a3c98a4a.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+		<div id="main">
+			<ul id="navbar">
+				<li><a href="/">lis.dev</a></li>
+				<li><a href="/">blog</a></li>
+				<li><a href="/globetrotter">globetrotter</a></li>
+		  	</ul>
+			<div id="describe-block">
+				<img id="my-photo" src="img/fox.jpg" />
+				<p id="my-name">tuvrai</p>
+				<p id="my-desc">blog</p>
+				<p id="my-power"><a id="github-href" href="https://github.com/tuvrai">@tuvrai</a></p>
+				<p id="my-power">powered by <a id="nggyu-href" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">nggyu</a></p>
+			</div>
+			<p style="text-align:center;">All posts, descending</p>
+			<a class="post-preview-container" href="/posts/today_is_monday_how_can_we_prove_it">
+				<div class="post-preview-image">
+					<img class="post-preview-image-element"  src="img/today_is_monday_how_can_we_prove_it.jpg"/>
+				</div>
+				<div class="post-preview-text">
+					<div class="post-preview-info">
+						<i class="fa-solid fa-calendar-days"></i>
+						<span class="post-preview-info-date">29.03.2023</span>
+					</div>
+					<h4 class="post-preview-title human-calendar-article-title">Today is monday... how can we prove it?</h4>
+					<p class="post-preview-teaser">In this post I will present an ultimate guide on how to calculate days of the week of the given day mentally in the matter of seconds.
+						All we need is first grade math and to help ourselves on the journey - some code.
+					</p>
+				</div>
+			</a>
+		</div>
+		<script>
+			document.getElementsByClassName('human-calendar-article-title')[0].innerText = `Today is ${new Date().toLocaleDateString("en-US", {weekday: 'long'}).toString()}... how can we prove it?`;
+		</script>
+    </body>
+</html>

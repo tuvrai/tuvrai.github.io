@@ -1,0 +1,308 @@
+body
+{
+    margin:0;
+}
+
+#main
+{
+    margin:auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#navbar
+{
+    display:flex;
+    column-gap:40px;
+    background-color: black;
+    margin:0;
+    padding:15px;
+    color:#fff;
+}
+
+#navbar li
+{
+    flex-flow:column wrap;
+    list-style-type: none;
+}
+
+#navbar a
+{
+    text-decoration: none;
+    color:inherit;
+    font-size: 1.5em;
+}
+
+div#describe-block
+{
+    text-align: center;
+    background-color: lightblue;
+    padding: 0.7em;
+}
+
+p#my-name
+{
+    font-weight: bold;
+    font-size: 1.7em;
+    margin:0;
+}
+
+p#my-desc
+{
+    margin:-5px 0 5px 0;
+}
+
+img#my-photo
+{
+    max-width: 100px;
+    max-height: auto;
+    border-radius: 50%;
+}
+
+div#post-preview
+{
+    display: inline-flex;
+
+}
+
+div.post-preview-container
+{
+    flex:1;
+    height:100%;
+}
+
+
+img.post-preview-picture
+{
+    clear: both;
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 50%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: inline-flex;
+    font-weight: bold;
+    vertical-align: top;
+  }
+  .main {
+    background: deepskyblue;
+    flex: 1;
+    text-align: center;
+  }
+  .image {
+    background: hotpink;
+    flex: 1;
+    height: 100%;
+  }
+
+
+  a.post-preview-container
+  {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr;
+    width: 60%;
+    margin: auto;
+    color:inherit;
+    padding: 5px;
+    text-decoration: none;
+    border-bottom: 1px solid rgb(182, 218, 229);;
+    margin-bottom: 3px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    a.post-preview-container
+    {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        width: 90%;
+    }
+
+    .post-preview-image
+  {
+    grid-row-start: 1;
+    grid-column-start: 1;
+  }
+
+    .post-preview-text
+    {
+        grid-row-start: 2;
+        grid-column-start: 1;
+        padding: 10px;
+    }
+  }
+
+  a.post-preview-container:hover
+  {
+    color:navy;
+    transition:  0.2s ease-in-out;
+  }
+
+  .post-preview-image
+  {
+    grid-column-start: 1;
+  }
+
+  .post-preview-image-element
+  {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 50%;
+    
+    filter: drop-shadow(12px 12px 6px gray);
+  }
+
+  .post-preview-text
+  {
+    grid-column-start: 2;
+    padding: 10px;
+  }
+
+  .post-preview-title
+  {
+    font-size: 2em;
+    margin: 0 0 20px 0;
+  }
+
+  #titleblock
+  {
+    margin: auto;
+    max-height: 300px;
+    padding: 20px;
+    border-bottom: 2px solid black;
+  }
+
+  #title
+  {
+    text-align: center;
+  }
+
+  #contentblock
+  {
+    max-width: 800px;
+    padding: 20px 30px 0 30px;
+    margin: auto;
+    letter-spacing: 0.5px;
+  }
+
+  #contentblock a
+  {
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #contentblock p
+  {
+    text-align: justify;
+    margin-bottom: 15px;
+  }
+
+  #contentblock li
+  {
+    text-align: justify;
+    margin-bottom: 15px;
+  }
+
+  #introduction
+  {
+    font-weight:bold;
+  }
+
+  .paragraph-title
+  {
+    margin: 30px 0;
+  }
+
+  .paragraph
+  {
+    text-align: justify;
+    margin-bottom: 15px;
+  }
+
+  td
+  {
+    padding: 5px;
+    border: 1px solid black;
+  }
+
+  .code-block{
+    background-color: rgb(248, 245, 240);
+    padding: 5px;
+    overflow: scroll;
+  }
+
+  .img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .article-table{
+    display: grid;
+    row-gap: 3px;
+    column-gap: 3px;
+    max-width: 500px;
+  }
+
+  
+  .article-table > div {
+    background-color: antiquewhite;
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px;
+  }
+
+  #weekday-table{
+    grid-template-columns: repeat(7,1fr);
+  }
+
+  #month-table{
+    grid-template-columns: repeat(auto-fill,38px);
+  }
+
+  #century-table{
+    grid-template-columns: repeat(auto-fill,70px);
+  }
+
+  #bundle-table{
+    grid-template-columns: repeat(auto-fill,90px);
+  }
+
+  #nggyu-href {
+    text-decoration: none;
+    font-weight: bold;
+    color: navy;
+  }
+
+  #github-href {
+    color: darkgreen;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  #julian-coef-table {
+    text-align: center;
+  }
+
+  #julian-coef-table td {
+    margin: 0 0 0 0;
+    background-color: antiquewhite;
+  }
+
+  #julian-coef-table th {
+   padding: 5px;
+  }
+
+  #julian-bce-coef-table th {
+    padding: 5px;
+    font-size: 0.8em;
+  }
+
+  #julian-bce-coef-table td {
+    margin: 0 0 0 0;
+    background-color: antiquewhite;
+  }

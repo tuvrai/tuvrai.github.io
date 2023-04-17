@@ -1,0 +1,580 @@
+<!doctype html>
+<html>
+    <head>
+		<title>lis.dev - blog</title>
+		<link rel="stylesheet" type="text/css" href="../style/style.css"/>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://kit.fontawesome.com/01a3c98a4a.js" crossorigin="anonymous"></script>
+		<style>
+			.year-cheat-sheet-id{
+				background-color: rgb(240, 222, 183);
+			}
+			.year-cheat-sheet-value-perfect{
+				font-weight: bold;
+			}
+			.year-cheat-sheet-id-perfect{
+				font-weight: bold;
+				background-color: rgb(236, 191, 92);
+			}
+		</style>
+    </head>
+    <body>
+        <div id="main">
+			<ul id="navbar">
+				<li><a href="/">lis.dev</a></li>
+				<li><a href="/">Blog</a></li>
+				<li><a href="/globetrotter">globetrotter</a></li>
+		  	</ul>
+			<div id="titleblock">
+				<h1 id="title">Today is Friday... how can we prove it?</h3>
+			</div>
+			<div id="contentblock">
+			<p id="introduction">In this post I will present an ultimate guide on how to calculate days of the week of the given day mentally
+				in the matter of seconds. All we need is first grade math, some effort and to help ourselves on the journey - some code.</p>
+				<h2 class="paragraph-title">The calendar</h2>
+				<p class="paragraph">
+					So the calendar we use right now is the Gregorian calendar, introduced by Pope Gregory XIII in 1582 as a replacement for Julian Calendar.
+					The latter one was used by over 1600 years - why someone bothered to change it?
+					That's because the amount of days in the astronomical year is not an integer - it's 365 days AND 5 hours, 48 minutes, 45 seconds and 138 milliseconds.
+				</p>
+				<p>
+					So if we we had a calendar with 365 days and nothing else, we would end up having a season offset of 1 day per 4 years. For instance, after 28 years, the summer would start a week later.
+				</p>
+					<p>
+					To fix that, the Julian calendar was introduced, giving us a leap year every 4 years. With that system, the offset is now 1 day per 128 years - over a century.
+					But after many, many centuries the drift was significant.</p>
+					<p>And so Gregorian Calendar was presented as a solution, changing Julian calendar slightly - removing the leap years when the date is divisible by 100, but not by 400.
+					So for example, the years 1800 and 1900 are not leap years (as they would be in Julian system), but 2000, 2400 and so on remain leap years.
+					This system yields 1 day of offset per 3216 years. We can still do better than that, as <a href="https://www.youtube.com/watch?v=qkt_wmRKYNQ">Matt Parker has shown</a>, but the system was good enough to be adopted by most of the countries, still being used today.
+				</p>
+				<h2 class="paragraph-title">The method</h2>
+				<p class="paragraph">
+					Every date can be uniquely identified by four properties: the day, the month, the century and the year within that century.
+					Each of those maps to a numerical value, which bundled together will give us final numerical value, which maps to some weekday name.
+
+				</p>
+					<p>
+						In our method, every week day is a number from 0 to 6. Our zero day will be sunday and the last is saturday - 6. When our final value is bigger than 6, we use modulo
+						arithmetic of 7, as we have 7 days in the week. For example, if we end up with the value 10, we actually have 3 - wednesday.
+					</p>
+					<div class="article-table" id="weekday-table">
+						<div>Su</div>
+							<div>Mo</div>
+							<div>Tu</div>
+							<div>We</div>
+							<div>Th</div>
+							<div>Fr</div>
+							<div>Sa</div>
+						<div>0</div>
+						<div>1</div>
+						<div>2</div>
+						<div>3</div>
+						<div>4</div>
+						<div>5</div>
+						<div>6</div>
+					</div>
+					<br>
+					<p>For instance, we will calculate the weekday of 29th July 2022.</p>
+					<img class="img" src="../year_division.png"/>
+					<h3>The day</h3>
+					<p class="paragraph">
+						This is the simplest component. We can think of it as an offset from last day of previous month, for instance 3rd June is offseted three days from May, 31th.
+						You probably know, that if you have any date and add 7 days to it, you end up with the same weekday in both dates, always.
+					<p>
+						29th of July has the same weekday as 22.07, 15.07, 8.07 and finally 1.07.
+						So we don't have to take such big number like 29, but just keep <b>1</b>. Let's keep it and move on.<br>
+					</p>
+					</p>	
+					<h3>The month</h3>
+					<p class="paragraph">
+						Every month has a unique, constant value. We start with the base of 0, at January. Let's say we have 1st January and it's monday.
+						As we know, by adding 7 or its multiple, we end up with the same day of the week. So 8th, 15th, 22th and 29nd January will also be monday.
+					<p>
+						How about 1st February? Since January is 31 days long,
+						the 1st February is 31 days after 1st January, in other words: 4 weeks and 3 days. So we have a constant value of how far the week day of 1st January is from 1st February - it's 3 days. Always.
+						If you think about it further, February 1st is the same day as March 1st (unless it's a leap year, but we'll cover that later).
+					</p>
+					<p>We can use it now to build the table of months by repeating the process from month to month, ending up with:</p>
+					<div class="article-table" id="month-table">
+							<div>
+								<div><b>Jan</b></div>
+								<div>0</div>
+							</div>
+							<div>
+								<div><b>Feb</b></div>
+								<div>3</div>
+							</div>
+							<div>
+								<div><b>Mar</b></div>
+								<div>3</div>
+							</div>
+							<div>
+								<div><b>Apr</b></div>
+								<div>6</div>
+							</div>
+							<div>
+								<div><b>May</b></div>
+								<div>1</div>
+							</div>
+							<div>
+								<div><b>Jun</b></div>
+								<div>4</div>
+							</div>
+							<div>
+								<div><b>Jul</b></div>
+								<div>6</div>
+							</div>
+							<div>
+								<div><b>Aug</b></div>
+								<div>2</div>
+							</div>
+							<div>
+								<div><b>Sep</b></div>
+								<div>5</div>
+							</div>
+							<div>
+								<div><b>Oct</b></div>
+								<div>0</div>
+							</div>
+							<div>
+								<div><b>Nov</b></div>
+								<div>3</div>
+							</div>
+							<div>
+								<div><b>Dec</b></div>
+								<div>5</div>
+							</div>
+					</div>
+					<p>
+					Calculating for January or October would be the best, as whether you substract it or add, it doesn't change anything,
+					basically meaning we can forget about the month coefficient altogether!
+					But our date is in July though, so we happily keep the <b>6</b> and move on.
+				</p>
+					<h3>The century</h3>
+					The Gregorian cycle lasts 400 years. The centuries are also somehow circular in this method:<br/>
+					<div class="article-table" id="century-table">
+						<div>
+							<div><b>16XY</b></div>
+							<div>6</div>
+						</div>
+						<div>
+							<div><b>17XY</b></div>
+							<div>4</div>
+						</div>
+						<div>
+							<div><b>18XY</b></div>
+							<div>2</div>
+						</div>
+						<div>
+							<div><b>19XY</b></div>
+							<div>0</div>
+						</div>
+						<div>
+							<div><b>20XY</b></div>
+							<div>6</div>
+						</div>
+						<div>
+							<div><b>21XY</b></div>
+							<div>4</div>
+						</div>
+					</div>
+					
+					<p>... and so on - we start from 6, down with -2 step until we reach 0. Then we start again from 6.</p>
+					<p>
+					I deliberately wrote those numbers as 16XY, 17XY etc. instead of 1600s, 1700s. That's because you need to focus on the first two digits itself, rather than a century the year is in.
+					Our century are years 2001-2100, not 2000-2099, but we use latter one to get the century coefficient. Hence, the year 2100, will have coefficient of 4 and the year 2099 will have 2,
+					despite they are in the same 21st century.<br/>
+					We keep the <b>6</b>.
+					</p>
+					<h3>The year</h3>
+					<p>
+					With a year, we start from base of 0, when the year is XY00. Since the regular year is 365 days long, it's 52 weeks... and one day. That's why, the offset is one day per year.
+					Once in four years though we end up in a leap year. So every 4 years we add value of two instead of 1, because when you think about it: 
+					1st march will be one week day later when 29th February is around, and so the other days of this year, except days in January and February.
+					</p>
+					<p>
+					The forumla for every year is: Get the value of year (in our case it's simply 22), divide it by 4 and trim it to integer -> 22/4 is 5.5, so we get 5. Then we add the year itself, having:
+					5 + 22 = 27, which divided by 7 days yields <b>6</b>.
+					</p>
+					<h3>Leap years</h3>
+					In Gregorian Calendar, the year is leap when it is:
+					<br/><b>1.</b> divisible by 4<br/><b>2.</b> not divisible by 100, unless it's divisible by 400 <br/>For example, years 2024, 2000 and 1600 are leap, but 1900 or 1800 are not.<br/><br/>
+					<p>In our method, if the year is not leap, we skip this point.</p>
+					<p>If it is though, you will need to substract the value of 1, but <b>only</b> if the month is January or February.
+					Why only those two? I explained in year property, that we add one every year, but since we have an extra day right before March the 1st, the weekdays of days starting from 01.03 will drift another extra day.
+					So we add two every 4 years to synchronize days after 29th February. But how about the first two months? They still fall into one day offset, and since we added two days to the year, 
+					we need to substract 1 for balance.<br><br>You can think of it that the coefficient of January and Februray are 6 and 2 respetively if the year is leap.
+				</p><p>Just around 4.1% of the dates will be affected by it.</p>
+					<p>Nevertheless, in July - our example date's month - we don't care about the leap year flag.</p>
+					<h3>Bundling all together</h3>
+					So we've got:
+					<div class="article-table" id="bundle-table">
+						<div>
+							<div><b>day</b></div>
+							<div>1</div>
+						</div>
+						<div>
+							<div><b>month</b></div>
+							<div>-1 or 6</div>
+						</div>
+						<div>
+							<div><b>year</b></div>
+							<div>-1 or 6</div>
+						</div>
+						<div>
+							<div><b>century</b></div>
+							<div>-1 or 6</div>
+						</div>
+						<div>
+							<div><b>leap flag</b></div>
+							<div>0</div>
+						</div>
+					</div>
+					<p>You might notice that some cells have two values. This is a very useful trick, if you want to make calculation faster.</p>
+					<p>So since we have our 0-day at Sunday. If we go 6 days forwards from Sunday, we get to Saturday. But since we don't care about actual calendar days, but just week days, we can also get to
+					Saturday by substracting one day. You can think of every coefficient as weekday distance from Sunday and sometimes substract, sometimes add, as substracting one might be easier that adding six.
+				</p><p>
+					So with that in mind, after adding each coefficient, we end up with the final one of <b>-2</b>, which essentialy means:</br><i>&lsquo;The week day, which is two days <b>before</b> Sunday&rsquo;</i>- Friday.
+					<p>
+					If we would add everything, we would get <b>19</b>. In case we've got bigger number than 6, we need to take the remainder of our value divided by 7, which gives us <b>5</b>,
+					which means:<br><i>&lsquo;The week day, which is five days <b>after</b> Sunday&rsquo;</i>- which is also Friday. <br /></p>
+					<p>
+					We can even mix substracting and adding, for example we take negative coefficent for year and positive for century, yielding 1+6-1-1 which is 5. You can always convert 6 to -1, 5
+					to -2 or even 4 to -3, if you want. 
+				</p>
+					That can make our month, year and century coefficients easier also, for example April and July instead of relatively big 6, become -1.
+					</p>
+					<h2 class="paragraph-title">Julian calendar</h2>
+					<p>
+					So the method above is perfectly compatible with the Gregorian calendar, used in modern times since 1582. Some countries adopted it <a href="https://en.wikipedia.org/wiki/Gregorian_calendar#Adoption_by_country">much later though</a>, with Saudi Arabia doing it very recently - just 7 years ago! So let's say we have a date from 17th century from English chronicle - it might be date compatible to Julian calendar, so using our method we won't calculate the weekday properly. We can't use it with any Julian date, like from medieval or roman times either. If you don't care about it, just skip this section.
+					</p>
+					<p>
+						But since Julian calendar is still very similar to Gregorian calendar (The only difference is that in Julian calendar <b>every</b> year divisible by four is leap, so years like 1700, 1800 or 1900 are leap in Julian calendar, contrary to Gregorian). 
+					</p>
+					<p>
+						So first let's move back in time to 5th october 1582, Gregorian calendar. Oh, actually we cannot do that, because this day never happened. That's because when the Gregorian calendar was adopted, they needed to recompensate the error accumulated by using Julian calendar (Julian calendar is one day late every 128 years) - so they skipped 10 days and after October 4th, October 15th happened.
+					</p>
+					<figure>
+						<img style="margin: 0;padding: 0;" class="img" src="../october1582.png" alt="1582 october calendar">
+						<figcaption style="margin: 0 0 20px 0; padding: 0;font-style: italic;font-size: 0.8em;"><a href="https://pl.wikipedia.org/wiki/Plik:Julian_to_Gregorian_Date_Change.png">via: Asmdemon, wikipedia.org</a></figcaption>
+					  </figure>
+					<p>
+						Alright, but all we care about are weekdays and as you can see on the graphics above despite skipping 10 days, they didn't change weekday by 3, so after thursday there is still Friday instead of Monday. If this change never happened, 15th October 1582 would be Monday in Julian terms, so we can see that the same day/month/year combination has positive three day offset in Julian calendar compared to Gregorian.
+					</p>
+					<p>
+						So we can use this knowledge and after calculating the weekday regularly as I taught you earlier, we simply add 3 days to the weekday and we get a weekday in Julian calendar. Keep in mind, that we are talking merely about plain day-month-year combination. Very same day has different combinations in Gregorian and Julian calendar. For example, 29th of March 2023 (Wednesday) in Gregorian is 16th of March 2023 (which is Wednesday also) in Julian calendar.
+					</p>
+					<p>
+						So we know what to do in 1500s, but what about the other centuries? We need to know, that 29th February 1500 did happen in Julian calendar and wouldn't in Gregorian calendar. So to take this change into account, we need to change our additional Julian coefficient (which is 3 in 1500s). When we go 100 years earlier, we need to lower it by one, so in 1400s the coefficient is 2, in 1300s it's 1 and in 1200s it's 0, <b>but</b> in 1100s it's also 0 - that's because year 1200 would be a leap year in both Julian and Gregorian calendar, so this time our calendar systems don't diverge.
+					</p>
+					<p>
+						It's more intuitive to do this process by going forward in time. So as we start from 1500s and coefficient 3, as we reach 1600s we still keep coefficient of 3, because year 1600 is leap in both systems. When we reach 1700s though, we need to increment it to 4, then in 1800s to 5 and so on. Let's present it as a table:
+					</p>
+					<table id="julian-coef-table">
+						<tr>
+							<th>Years</th>
+							<th>Gre. coef</th>
+							<th>Jul. coef</th>
+							<th>Overall</th>
+						</tr>
+						<tr>
+							<td>2000s</td>
+							<td>6</td>
+							<td>6</td>
+							<td><b>5</b></td>
+						</tr>
+						<tr>
+							<td>1900s</td>
+							<td>0</td>
+							<td>6</td>
+							<td><b>6</b></td>
+						</tr>
+						<tr>
+							<td>1800s</td>
+							<td>2</td>
+							<td>5</td>
+							<td><b>0</b></td>
+						</tr>
+						<tr>
+							<td>1700s</td>
+							<td>4</td>
+							<td>4</td>
+							<td><b>1</b></td>
+						</tr>
+						<tr>
+							<td>1600s</td>
+							<td>6</td>
+							<td>3</td>
+							<td><b>2</b></td>
+						</tr>
+						<tr>
+							<td>1500s</td>
+							<td>0</td>
+							<td>3</td>
+							<td><b>3</b></td>
+						</tr>
+						<tr>
+							<td>1400s</td>
+							<td>2</td>
+							<td>2</td>
+							<td><b>4</b></td>
+						</tr>
+						<tr>
+							<td>1300s</td>
+							<td>4</td>
+							<td>1</td>
+							<td><b>5</b></td>
+						</tr>
+						<tr>
+							<td>1200s</td>
+							<td>6</td>
+							<td>0</td>
+							<td><b>6</b></td>
+						</tr>
+						<tr>
+							<td>1100s</td>
+							<td>0</td>
+							<td>0</td>
+							<td><b>0</b></td>
+						</tr>
+						<tr>
+							<td>1000s</td>
+							<td>2</td>
+							<td>6</td>
+							<td><b>1</b></td>
+						</tr>
+						<tr>
+							<td>900s</td>
+							<td>4</td>
+							<td>5</td>
+							<td><b>2</b></td>
+						</tr>
+						<tr>
+							<td>800s</td>
+							<td>6</td>
+							<td>4</td>
+							<td><b>3</b></td>
+						</tr>
+						<tr>
+							<td>700s</td>
+							<td>0</td>
+							<td>4</td>
+							<td><b>4</b></td>
+						</tr>
+						<tr>
+							<td>600s</td>
+							<td>2</td>
+							<td>3</td>
+							<td><b>5</b></td>
+						</tr>
+						<tr>
+							<td>500s</td>
+							<td>4</td>
+							<td>2</td>
+							<td><b>6</b></td>
+						</tr>
+						<tr>
+							<td>400s</td>
+							<td>6</td>
+							<td>1</td>
+							<td><b>0</b></td>
+						</tr>
+						<tr>
+							<td>300s</td>
+							<td>0</td>
+							<td>1</td>
+							<td><b>1</b></td>
+						</tr>
+						<tr>
+							<td>200s</td>
+							<td>2</td>
+							<td>0</td>
+							<td><b>2</b></td>
+						</tr>
+						<tr>
+							<td>100s</td>
+							<td>4</td>
+							<td>6</td>
+							<td><b>3</b></td>
+						</tr>
+						<tr>
+							<td>(-1)-99</td>
+							<td>6</td>
+							<td>5</td>
+							<td><b>4</b></td>
+						</tr>
+						<tr>
+							<td>(-101)-(-2)</td>
+							<td>0</td>
+							<td>5</td>
+							<td><b>5</b></td>
+						</tr>
+					</table>
+					As you can see, when we combine Gregorian century coefficient and Julian coefficient we end up with overall Julian century coefficient we can use, when we encounter a Julian date. For example we can easily calculate weekday of the capture of Constantinopole, 29 May 1453:
+					<div class="article-table" id="bundle-table">
+						<div>
+							<div><b>day</b></div>
+							<div>1</div>
+						</div>
+						<div>
+							<div><b>month</b></div>
+							<div>1</div>
+						</div>
+						<div>
+							<div><b>year</b></div>
+							<div>3</div>
+						</div>
+						<div>
+							<div><b>century</b></div>
+							<div>4</div>
+						</div>
+						<div>
+							<div><b>leap flag</b></div>
+							<div>0</div>
+						</div>
+					</div>
+				    Bundling together, we have 9. Meaning this event happened two days after Sunday, which is Tuesday.<br><br>
+					<p>
+						You might wonder what about dates B.C.E. Well, it's trickier, because as we go backwards in A.D. dates we have a pattern of years like e.g. 4,3,2,1,0,99,98 ..., but with B.C. dates we've got 98,99,0,1,2 and so on - we go in opposite direction. Another fact is that the year zero didn't exist, so from 1 A.D. we go straight to 1 B.C.
+					</p>
+					<p>
+						To handle that, we can temporary add 100 to dates which are close to B.C./A.D. calendar eras border, so it's easier to see the pattern. I will write A.D. years as positive numbers and B.C. dates as negative:
+						<table id="julian-bce-coef-table">
+							<tr>
+								<th>Year</th>
+								<th>Year+100</th>
+								<th>Year coef</th>
+								<th>Gre. cent. coef</th>
+								<th>Jul. cent. coef</th>
+								<th>Overall cent. coef</th>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>101</td>
+								<td>1</td>
+								<td>6</td>
+								<td>5</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>-1</td>
+								<td>100</td>
+								<td>0</td>
+								<td>6</td>
+								<td>5</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>-2</td>
+								<td>99</td>
+								<td>4</td>
+								<td>0</td>
+								<td>5</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td>-3</td>
+								<td>98</td>
+								<td>3</td>
+								<td>0</td>
+								<td>5</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td colspan="6">... and so on ...</td>
+							</tr>
+							<tr>
+								<td>-100</td>
+								<td>1</td>
+								<td>1</td>
+								<td>0</td>
+								<td>5</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td>-101</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>5</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td>-102</td>
+								<td>99</td>
+								<td>4</td>
+								<td>2</td>
+								<td>4</td>
+								<td>6</td>
+							</tr>
+						</table>
+						As you can see, in year B.C. we act like it was year 0, the first year of the interval, just like year 2000 is first year of 2000-2099 interval. 2 B.C. is the last year of the previous interval and since it's different interval - we change the gregorian century coefficient, but we don't change julian coefficient for the same reason it didn't change between 1500s and 1600s A.D. Another interval ends on 102 B.C. and so on.
+					</p>
+					<p>
+						Nevertheless, calcluating weekdays in B.C. era might not be very accurate. First of all, Julian calendar was introduced in 45 B.C. so calculating weekdays for any year before that is a funny game at best. Secondly, people who managed it made mistakes, <a href="https://en.wikipedia.org/wiki/Julian_calendar#Leap_year_error">like adding a leap year every three years instead of four</a>. Basically, until A.D. era it was a mess. But still, you can have fun calculating. You might checkout this <a href="https://core2.gsfc.nasa.gov/time/julian.html">Julian Day calculator</a> provided by <a href="https://www.nasa.gov/">nasa.gov</a> (I don't know what's the story behind it).
+					</p>
+					<h2 class="paragraph-title">The improvement</h2>
+					<p>
+					So with the method presented in previous chapter, you will be already able to calculate any date in roughly 20-30 seconds, using month and century coefficients table, as at this point
+					you don't really remember it.
+					</p>
+					<p>
+					But if you want to impress somebody or compete, you need to do it really quickly. So what you need to do, to make it quick?
+				</p>
+					<ul>
+						<li>
+							The most important thing is to remember the month and century coefficients. Some people might suggest memory techniques, which altough helpful, might not be enough.
+							I suggest you don't use them entirely, because just as you solve many dates, those coefficients will become your second nature and i believe that if you want to make it instant,
+							you need to make a lot
+							of repetitions. So don't worry if you don't remember a coefficient, just check the table. After many calculations, eventually you won't need the tables and after
+							 you hear any month, you will know how much to add or substract in the matter of a fraction of the second.
+						</li>
+						<li>
+							Working with big numbers - it was already mentioned. It's much easier to work with smaller numbers, so use the property of modulo 7. For example, the 29th day of the month is the same as
+							the number 1, so it's easier to remember and operate with. But sometimes it might be faster to work with bigger numbers, if you know the group of numbers having the same value.</br>
+							For example, 24 is the same as 3 and so is 17 and 10 or 31. For example, with date 10th December 2003, the sum of coefficients is 24 and if you remember 24 is Wednesday, you already know the weekday.
+						</li>
+						<li>
+							Remembering year coefficients - this is harder than remembering other coefficients as there is 100 possibilities, but it's worth to remember those, as it significantly reduces time to calculate.</br>
+							Using the formula we discussed with year coefficient, we can figure out the constant values for every year. Here's a cheat sheet:</br>
+						<table id = "year-cheat-sheet">
+							<tr><td class="year-cheat-sheet-id-perfect">00</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">20</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">40</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">60</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">80</td><td class="year-cheat-sheet-value">2</td></tr><tr><td class="year-cheat-sheet-id">01</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">21</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">41</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">61</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">81</td><td class="year-cheat-sheet-value">3</td></tr><tr><td class="year-cheat-sheet-id">02</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">22</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">42</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">62</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">82</td><td class="year-cheat-sheet-value">4</td></tr><tr><td class="year-cheat-sheet-id">03</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">23</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">43</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">63</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">83</td><td class="year-cheat-sheet-value">5</td></tr><tr><td class="year-cheat-sheet-id">04</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">24</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">44</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">64</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">84</td><td class="year-cheat-sheet-value-perfect">0</td></tr><tr><td class="year-cheat-sheet-id">05</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">25</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">45</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">65</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">85</td><td class="year-cheat-sheet-value">1</td></tr><tr><td class="year-cheat-sheet-id-perfect">06</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">26</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">46</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">66</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">86</td><td class="year-cheat-sheet-value">2</td></tr><tr><td class="year-cheat-sheet-id">07</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">27</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">47</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">67</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">87</td><td class="year-cheat-sheet-value">3</td></tr><tr><td class="year-cheat-sheet-id">08</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">28</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">48</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">68</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">88</td><td class="year-cheat-sheet-value">5</td></tr><tr><td class="year-cheat-sheet-id">09</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">29</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">49</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">69</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">89</td><td class="year-cheat-sheet-value">6</td></tr><tr><td class="year-cheat-sheet-id">10</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">30</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">50</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">70</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">90</td><td class="year-cheat-sheet-value-perfect">0</td></tr><tr><td class="year-cheat-sheet-id">11</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">31</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">51</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">71</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">91</td><td class="year-cheat-sheet-value">1</td></tr><tr><td class="year-cheat-sheet-id">12</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">32</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">52</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">72</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">92</td><td class="year-cheat-sheet-value">3</td></tr><tr><td class="year-cheat-sheet-id">13</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">33</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">53</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">73</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">93</td><td class="year-cheat-sheet-value">4</td></tr><tr><td class="year-cheat-sheet-id">14</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">34</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">54</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">74</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">94</td><td class="year-cheat-sheet-value">5</td></tr><tr><td class="year-cheat-sheet-id">15</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">35</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">55</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">75</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">95</td><td class="year-cheat-sheet-value">6</td></tr><tr><td class="year-cheat-sheet-id">16</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">36</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">56</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">76</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">96</td><td class="year-cheat-sheet-value">1</td></tr><tr><td class="year-cheat-sheet-id-perfect">17</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">37</td><td class="year-cheat-sheet-value">4</td><td class="year-cheat-sheet-id">57</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">77</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">97</td><td class="year-cheat-sheet-value">2</td></tr><tr><td class="year-cheat-sheet-id">18</td><td class="year-cheat-sheet-value">1</td><td class="year-cheat-sheet-id">38</td><td class="year-cheat-sheet-value">5</td><td class="year-cheat-sheet-id">58</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">78</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">98</td><td class="year-cheat-sheet-value">3</td></tr><tr><td class="year-cheat-sheet-id">19</td><td class="year-cheat-sheet-value">2</td><td class="year-cheat-sheet-id">39</td><td class="year-cheat-sheet-value">6</td><td class="year-cheat-sheet-id">59</td><td class="year-cheat-sheet-value">3</td><td class="year-cheat-sheet-id-perfect">79</td><td class="year-cheat-sheet-value-perfect">0</td><td class="year-cheat-sheet-id">99</td><td class="year-cheat-sheet-value">4</td></tr>
+						</table>
+						</br>
+						There is a certain reasoning in this table. First of all, every year we add up 1, unless it's leap - then we add 2, just like expected. Notice, that every 28 years the cycle resets. So for example year 12 will have
+					the same coefficient as year 40.</br>Also, watch those emphasized cells.
+						Those guys will be your favorite, as their coefficient is 0, meaning you don't need them in calculations. It's good to remember those quicker and then use them as pivotal points. For instance, remembering that 62 is 0,
+						when we encounter the date from say 1963, we know it's year coefficient is 1, as it is one year after the <i>golden year</i>, as I call years with 0 coefficient. Then 1964 is 3 (not 2, because it's divisible by 4). It's easier to remember the table
+						with some reasoning. Just have fun with that and play with it a little and maybe you see some more patterns and in no time you will be very quick with those. The better you remember, the faster you are.
+						</li>
+						<li>
+							Chunking - remember simplyfing a mathematic equation? This is the same stuff - we remove some elements if we see a pattern. The pattern here is to have some of the elements add up to 0, so we can abandon them.
+							For example, when we've got the year 1764, we've got coefficient of the century of 4 and of the year of 3, giving in total 7 which in our case is 0. Now we know that the year doesn't change nothing, so we just add
+							the month and the day, remebering about possibility of leap year flag if we are in January or February.</br></br>
+							We can use the chunking in another way. Since we are in a year 2022, the coefficient of our year is 5. That means, if we have the date from this year, we add a constant value of 5 (or substract 2) to every day from
+							calendar from this year. It makes calculations much faster.<br><br>For example, if someone asks you on what day week is Christmas this year for example - 
+							you just calculate the coefficient of 24th December which is 2
+							(and is also constant by the way, so you can calculate Christmas' weekday for any year. You can do it for other things, for example your birthday will also have constant month + day value) and add it up to year coefficient.
+						</li>
+					</ul>
+					Keep in mind, that every date-calculating property comes from a calendar properties itself, so maybe you will discover some patterns independently, <a href="https://blogs.scientificamerican.com/beautiful-minds/where-do-savant-skills-come-from/">just like savants do</a>. Generally speaking
+					though, remembering as much as you can is very helpful. The less you compute in your head, the better. And every fraction of the second could be important.
+				</p>
+				<h2 class="paragraph-title">The training</h2>
+				<p>
+					Now when we are familiar with the ways how to quickly calculate dates, we need to put some time and effort into training, which is essentialy calculating as many weekdays as possible.<br>
+					And this is where computers help us. I wrote a simple webapp, which will allow us quickly do a lot of repetitions in short period of time.<br>
+					<br>It allows player guess weekday of random date from year interval 1600 to 2400 (easy to change). We have a UI which allows user training limited either by tries or by time. It also calculate stats of every session.
+					<br><br>You can get the source code <a href="https://github.com/tuvrai/weekdayer/tree/main">here</a> and freely use it and modify it for your preferences.
+			</p>
+			</div>
+			
+        </div>
+		<script type="text/javascript">
+			document.title = `Today is ${new Date().toLocaleDateString("en-US", {weekday: 'long'}).toString()}... how can we prove it?`;
+			document.getElementById('title').innerText = document.title;
+		</script>
+		<script type="text/javascript" src="../syntax_highlighter.js"></script>
+    </body>
+</html>

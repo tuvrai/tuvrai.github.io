@@ -1,0 +1,35 @@
+.syntax-highlight-block
+{
+    color: rgb(69, 77, 155);
+}
+
+pre.syhigh
+{
+    display: inline;
+}
+
+.syhigh-line
+{
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+.syhigh-comment
+{
+    color: darkgreen;
+}
+
+.syhigh-keyword
+{
+    color: rgb(167, 79, 17);
+}
+
+.syhigh-operator
+{
+    color: rgb(55,55,55);
+}
+
+.syhigh-key-func
+{
+    color: blue;
+}
