@@ -306,3 +306,8 @@ img.post-preview-picture
     margin: 0 0 0 0;
     background-color: antiquewhite;
   }
+
+#mainmark {
+    font-weight: bold;
+    letter-spacing: 2px;
+}
