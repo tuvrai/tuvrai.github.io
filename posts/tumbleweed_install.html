@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+		<title>tuvrai.space - Tumbleweed installation</title>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://kit.fontawesome.com/01a3c98a4a.js" crossorigin="anonymous"></script>
+		<link rel="icon" type="image/x-icon" href="/img/favicon.jpg">
+		<style>
+
+		</style>
+    </head>
+	<body>
+        <div id="main">
+			<ul id="navbar">
+				<li><a href="/" id="mainmark">tuvrai</a></li>
+				<li><a href="/">blog</a></li>
+				<li><a href="/globetrotter">globetrotter</a></li>
+		  	</ul>
+			<div id="titleblock">
+				<h1 id="title">Installing OpenSUSE Tumbleweed</h3>
+			</div>
+			<div id="contentblock">
+			<p id="introduction"><b style="font-size: 1.0em;">Guest post by: <span style="color: darkgreen;">sernick</span></b><br><br>In this short tutorial, I present guide for installing lightweight OpenSUSE Tumbleweed.</p>
+			<h2 class="paragraph-title">Introduction</h2>
+				<p class="paragraph">
+					I was recently switching laptops and after living on a meme minimal setup for 5 years, I have decided that as fun and educational it might be - it can also be a pain in the ass. I got tired of the last part so after <i>distrohopping</i> for a while, I settled on Tumbleweed. It seems to have all the perks of the rolling release distros (fresh software, broad community repos) and regular ones (fairly stable, nice installer for setting up a complete desktop environment).
+				</p>
+				<p>
+					But alas, it didn't come without a few setbacks at the beginning. Here are the ones that I've encountered - mainly for my own memory's sake, but it might be of help to you too if you're to have some fun with Tumbleweed.
+				</p>
+				<h2 class="paragraph-title">Prerequisites</h2>
+				<h3 style="margin-bottom: 10px;">Testing it out - live CD</h3>
+				<p class="paragraph">
+					It would be nice to test Tumbleweed before installing, but there's no live CD on the <a href="https://get.opensuse.org/tumbleweed/">download page</a>. Does that mean they don't provide live images? Nope, they're just really shy about them.
+				</p>
+				<p>
+					If you take a look at Tumbleweed <a href="https://download.opensuse.org/tumbleweed/iso/">download directory</a>, you can find the latest live images with all kinds of desktop environments. Curiously, the <i>-Current</i> and <i>-Snapshot</i> ISOs seem to be the exact same thing.
+				</p>
+				<h2 class="paragraph-title">Install</h2>
+				<h3 style="margin-bottom: 10px;">Change polkit settings</h3>
+				<p>
+					This is a must for a desktop user, seriously. Default polkit settings are basically a WW2 bunker - you have to input admin pass for changing WiFi settings, switching SDDM themes and more basic desktop things. It's annoying, bordering on infuriating. 
+				</p>
+				<p>
+					But there's an option to change it, if right before installing you switch polkit settings to 'Easy'. This installs a more relaxed policy profile which is more inline for a desktop computer.
+				</p>
+				<h3 style="margin-bottom: 10px;">Adjust packages</h3>
+				<p>
+					In the same menu, you can configure to-be-installed package sets. A good moment to revise them and trim on bloat if we wish so.
+				</p>
+				<h2 class="paragraph-title">Post-Install</h2>
+				<h3 style="margin-bottom: 10px;">Media codecs for normal video playback</h3>
+				<p>
+					Due to patent regulation, default Tumbleweed installs can't contain any patented codec implementations (this includes provided ffmpeg), which blows really hard since that effectively kills hardware video playback for all formats and any kind of playback for some.
+				</p>
+				<p>
+					Fortunately, there are alternative packman repositories, containing complete versions of crucial media tooling/libraries under <a href="https://www.opensuse-community.org/">opensuse community website</a>. Utilizing the 1-click install, we install and replace everything we can. Just to make sure, we also open YaST Package Management and under Repositories - we make packman repositories the default vendors for media packages.
+				</p>
+	</body>
+</html>
